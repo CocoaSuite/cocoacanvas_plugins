@@ -1,0 +1,182 @@
+{
+ "schema": 1,
+ "name": "CocoaSuite plugins for CocoaCanvas",
+ "plugins": [
+  {
+   "id": "apple-design-kit",
+   "name": "Apple Design Kit",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Unofficial iOS-style components drawn from scratch: status and navigation bars, tab bar, buttons, switches, segmented controls, lists, alerts, action sheets, keyboard and iPhone screens. Light and dark. Not affiliated with Apple.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "⌘",
+   "color": "#0A84FF",
+   "path": "plugins/apple-design-kit.js",
+   "sha256": "985b0d95ad7b67df425eb8ad0a0cc4babb5a917de195b2ac0ada961e37489b6a",
+   "size": 40463,
+   "name_ru": "Apple Design Kit",
+   "description_ru": "Неофициальные компоненты в стиле iOS, нарисованные с нуля: строка состояния, навигация, таб-бар, кнопки, переключатели, сегменты, списки, алерты, клавиатура и экраны iPhone. Светлые и тёмные. Не связано с Apple."
+  },
+  {
+   "id": "google-design-kit",
+   "name": "Google Design Kit",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Unofficial Material 3-style components drawn from scratch, coloured from your own seed colour: app bars, navigation bar, FABs, buttons, chips, switches, checkboxes, text fields, cards, lists, dialogs, snackbars and Android screens. Light and dark. Not affiliated with Google.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "M",
+   "color": "#6750A4",
+   "path": "plugins/google-design-kit.js",
+   "sha256": "15a18655d55287432ffa80721d60dd16ed85bebc4b5624f67252e2dee34c11c7",
+   "size": 39380,
+   "name_ru": "Google Design Kit",
+   "description_ru": "Неофициальные компоненты в стиле Material 3, нарисованы с нуля и окрашены от вашего базового цвета: верхние панели, навигация, FAB, кнопки, чипы, переключатели, чекбоксы, поля, карточки, списки, диалоги, снекбары и экраны Android. Светлые и тёмные. Не связано с Google."
+  },
+  {
+   "id": "icons",
+   "name": "Icons",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "About 6,000 free icons: Lucide outline icons plus Google Material Symbols, outlined and filled. Search, pick a size and colour, and insert as editable vectors.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "✦",
+   "color": "#2F6FDE",
+   "path": "plugins/icons.js",
+   "sha256": "feef8560fe4735f7586882eb9ce5d695e3246ac144298feafb3cfbc0fb19938d",
+   "size": 3168936,
+   "name_ru": "Иконки",
+   "description_ru": "Около 6000 бесплатных иконок: контурные Lucide и Google Material Symbols (контурные и заливные). Поиск, размер и цвет, вставка редактируемым вектором."
+  },
+  {
+   "id": "placeholders",
+   "name": "Placeholder Graphics",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Ready-made UI placeholders: buttons, fields, checkboxes, avatars, image and video boxes, cards, tabs, dialogs, toasts and skeletons. Built with auto layout in your accent colour, light or dark.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "◫",
+   "color": "#7A5AF8",
+   "path": "plugins/placeholders.js",
+   "sha256": "a5ae8552c3286b26fc5746e645d11633b1fc6fd72e4b9b14ae9786de547d530f",
+   "size": 38473,
+   "name_ru": "Заготовки интерфейса",
+   "description_ru": "Готовые заготовки интерфейса: кнопки, поля, чекбоксы, аватары, места под фото и видео, карточки, вкладки, диалоги, уведомления и скелетоны. С автораскладкой, в вашем цвете, светлые или тёмные."
+  },
+  {
+   "id": "patterns",
+   "name": "Pattern Generator",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Seamless background patterns: dots, grids, stripes, checks, waves, zigzags, hexagons and more. Inserted as a crisp vector tile that fills the selected frame or a new area.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "▦",
+   "color": "#3C7A6E",
+   "path": "plugins/patterns.js",
+   "sha256": "7dad6bb5c3d496ee4ab20956d2cebeeb0a9638c03965bf74c5f3154b0000faac",
+   "size": 7150,
+   "name_ru": "Генератор узоров",
+   "description_ru": "Бесшовные фоновые узоры: точки, сетки, полосы, клетка, волны, зигзаги, соты и другие. Вставляются чётким векторным тайлом на весь выделенный фрейм или новую область."
+  },
+  {
+   "id": "noise",
+   "name": "Noise Generator",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Film grain, colour noise, soft clouds and paper texture. Adds a seamless noise layer over the selection with the blend mode of your choice.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "░",
+   "color": "#6B6B78",
+   "path": "plugins/noise.js",
+   "sha256": "3cb6129903d8d5dd9b80466a847f96f5797035ca2ce3c7851b8ea5999b9719dc",
+   "size": 6194,
+   "name_ru": "Генератор шума",
+   "description_ru": "Плёночное зерно, цветной шум, мягкие облака и текстура бумаги. Добавляет бесшовный слой шума поверх выделенного с нужным режимом наложения."
+  },
+  {
+   "id": "qr-code",
+   "name": "QR Code",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "QR codes for links, text, Wi-Fi, email, phone, SMS and contacts. Inserted as an editable vector, with square, rounded or dot styles.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "insert"
+   ],
+   "icon": "▣",
+   "color": "#222222",
+   "path": "plugins/qr-code.js",
+   "sha256": "d95bd9415c1f7ba9b493fa97a8c69ab9934562f3dc4a87336b7561c2ec37f9ca",
+   "size": 65716,
+   "name_ru": "QR-код",
+   "description_ru": "QR-коды для ссылок, текста, Wi-Fi, почты, телефона, SMS и контактов. Вставляются редактируемым вектором: квадраты, скругления или точки."
+  },
+  {
+   "id": "lorem-ipsum",
+   "name": "Lorem Ipsum",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Placeholder text in Latin, English or Russian. Fills the selected text layers or adds a new text box.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert",
+    "edit"
+   ],
+   "icon": "¶",
+   "color": "#8B6B4E",
+   "path": "plugins/lorem-ipsum.js",
+   "sha256": "38b1368812de0bed00910da0ad9073b6630ff9f769bd53e9763f03bca442b370",
+   "size": 6214,
+   "name_ru": "Lorem Ipsum",
+   "description_ru": "Текст-заглушка на латыни, английском или русском. Заполняет выделенные тексты или добавляет новый."
+  }
+ ]
+}
