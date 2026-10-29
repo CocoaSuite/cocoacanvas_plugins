@@ -91,6 +91,95 @@
    "description_ru": "Готовые заготовки интерфейса: кнопки, поля, чекбоксы, аватары, места под фото и видео, карточки, вкладки, диалоги, уведомления и скелетоны. С автораскладкой, в вашем цвете, светлые или тёмные."
   },
   {
+   "id": "charts",
+   "name": "Charts & Tables",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Bar, column, line, area, pie and donut charts and neat tables from your own numbers. Paste data from a spreadsheet; everything arrives as editable shapes and text.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert"
+   ],
+   "icon": "▥",
+   "color": "#2F8F83",
+   "path": "plugins/charts.js",
+   "sha256": "a858d4326874f8e35b7060ac3316702003142c0f31c20989aee79e7d90d273a3",
+   "size": 14585,
+   "name_ru": "Графики и таблицы",
+   "description_ru": "Столбчатые, линейные, областные, круговые и кольцевые диаграммы и аккуратные таблицы из ваших чисел. Вставьте данные из таблицы; всё появится редактируемыми фигурами и текстом."
+  },
+  {
+   "id": "sticky-notes",
+   "name": "Sticky Notes",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Sticky notes and to-do lists for planning on the canvas. Notes come in soft colours and resize with their text; tick to-do items straight from the Plugins menu or Cocoa Helper.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "insert",
+    "edit"
+   ],
+   "icon": "✎",
+   "color": "#E2B93B",
+   "path": "plugins/sticky-notes.js",
+   "sha256": "5d157f8f0cc3b12c9261d7c250a1d31cec3b67bda6c681752813a25a844a4b7c",
+   "size": 8028,
+   "name_ru": "Стикеры",
+   "description_ru": "Стикеры и списки дел для планирования прямо на холсте. Заметки мягких цветов подстраиваются под текст; отмечайте задачи из меню плагинов или через Cocoa Helper."
+  },
+  {
+   "id": "radius-sync",
+   "name": "Radius Sync",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Makes nested corners look right. Inner layers get the outer radius minus the gap between them, so cards, buttons and screens share one smooth curve. Can also match one radius across many layers.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "edit"
+   ],
+   "icon": "◜",
+   "color": "#4E7AC7",
+   "path": "plugins/radius-sync.js",
+   "sha256": "2765977ab82f19c1ac8b67937f5569a9b8e277de3b17e28ea02f76189c2f2d51",
+   "size": 5782,
+   "name_ru": "Синхронизация скруглений",
+   "description_ru": "Делает вложенные углы аккуратными. Внутренние слои получают внешний радиус минус отступ между ними, и карточки, кнопки и экраны повторяют одну плавную кривую. Также может задать один радиус многим слоям."
+  },
+  {
+   "id": "remove-background",
+   "name": "Remove Background",
+   "version": "1.0.0",
+   "author": "CocoaSuite",
+   "description": "Cuts the background out of a photo, product shot, logo or scan, right on your device. Works best when the background is fairly plain; tune the strength and edge softness, or pick the colour to remove.",
+   "access": "safe",
+   "permissions": [
+    "ui",
+    "menu",
+    "helper",
+    "read",
+    "edit"
+   ],
+   "icon": "✂",
+   "color": "#5B6CD9",
+   "path": "plugins/remove-background.js",
+   "sha256": "314522d8180ca04a4ad105e3176b3d930868662896b6b6d59fc199310e94aba4",
+   "size": 9508,
+   "name_ru": "Удаление фона",
+   "description_ru": "Вырезает фон с фото, снимка товара, логотипа или скана прямо на устройстве. Лучше всего работает с однотонным фоном; настройте силу и мягкость края или выберите цвет для удаления."
+  },
+  {
    "id": "patterns",
    "name": "Pattern Generator",
    "version": "1.0.1",

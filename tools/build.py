@@ -22,7 +22,7 @@ def head(code):
         if x:o[x.group(1)]=x.group(2).strip()
     return o
 if EXT: build_src()
-order=['apple-design-kit','google-design-kit','icons','placeholders','patterns','noise','qr-code','lorem-ipsum']
+order=['apple-design-kit','google-design-kit','icons','placeholders','charts','sticky-notes','radius-sync','remove-background','patterns','noise','qr-code','lorem-ipsum']
 plugins=[]
 for f in sorted(os.listdir(os.path.join(ROOT,'plugins')),key=lambda f:(order.index(f[:-3]) if f[:-3] in order else 99,f)):
     if not f.endswith('.js'):continue
