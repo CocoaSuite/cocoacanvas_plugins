@@ -93,7 +93,7 @@
   {
    "id": "patterns",
    "name": "Pattern Generator",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "author": "CocoaSuite",
    "description": "Seamless background patterns: dots, grids, stripes, checks, waves, zigzags, hexagons and more. Inserted as a crisp vector tile that fills the selected frame or a new area.",
    "access": "safe",
@@ -107,8 +107,8 @@
    "icon": "▦",
    "color": "#3C7A6E",
    "path": "plugins/patterns.js",
-   "sha256": "7dad6bb5c3d496ee4ab20956d2cebeeb0a9638c03965bf74c5f3154b0000faac",
-   "size": 7150,
+   "sha256": "410c4d6d81ce43bef7d5736363a6c9fe0fb5105dce6c06ee1e1dcebb32d91bec",
+   "size": 7090,
    "name_ru": "Генератор узоров",
    "description_ru": "Бесшовные фоновые узоры: точки, сетки, полосы, клетка, волны, зигзаги, соты и другие. Вставляются чётким векторным тайлом на весь выделенный фрейм или новую область."
   },

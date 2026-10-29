@@ -2,7 +2,7 @@
 // @id patterns
 // @name Pattern Generator
 // @name_ru Генератор узоров
-// @version 1.0.0
+// @version 1.0.1
 // @author CocoaSuite
 // @description Seamless background patterns: dots, grids, stripes, checks, waves, zigzags, hexagons and more. Inserted as a crisp vector tile that fills the selected frame or a new area.
 // @description_ru Бесшовные фоновые узоры: точки, сетки, полосы, клетка, волны, зигзаги, соты и другие. Вставляются чётким векторным тайлом на весь выделенный фрейм или новую область.
@@ -14,22 +14,22 @@ const T=cocoa.t;
 const KINDS=[['dots',T('Dots','Точки')],['grid',T('Grid','Сетка')],['lines',T('Lines','Линии')],['stripes',T('Diagonal','Диагональ')],['checker',T('Checker','Клетка')],['waves',T('Waves','Волны')],['zigzag',T('Zigzag','Зигзаг')],['hex',T('Hexagons','Соты')],['plus',T('Plus','Плюсы')],['triangles',T('Triangles','Треугольники')],['rings',T('Rings','Кольца')],['diamonds',T('Diamonds','Ромбы')],['herring',T('Herringbone','Ёлочка')],['cross',T('Crosshatch','Штриховка')]];
 const r=v=>Math.round(v*100)/100;
 function tile(o){const s=Math.max(4,Math.min(400,+o.size||24)),fg=o.fg||'#D15A2C',bg=o.bg,t=Math.max(.5,+o.weight||2),d=Math.max(.5,+o.dot||3);let w=s,h=s,b='';
- const st=`fill="none" stroke="${fg}" stroke-width="${t}" stroke-linecap="round" stroke-linejoin="round"`;
+ const sw=`fill="none" stroke="${fg}" stroke-width="${t}" stroke-linejoin="round"`,st=sw+' stroke-linecap="round"',sb=sw+' stroke-linecap="butt"';
  switch(o.kind){
  case'dots':b=`<circle cx="${s/2}" cy="${s/2}" r="${d}" fill="${fg}"/>`;if(o.offset){w=s;h=s;b+=`<circle cx="0" cy="0" r="${d}" fill="${fg}"/><circle cx="${s}" cy="0" r="${d}" fill="${fg}"/><circle cx="0" cy="${s}" r="${d}" fill="${fg}"/><circle cx="${s}" cy="${s}" r="${d}" fill="${fg}"/>`}break;
- case'grid':b=`<path d="M0 ${t/2}H${s}M${t/2} 0V${s}" ${st} stroke-linecap="butt"/>`;break;
- case'lines':b=`<path d="M0 ${s/2}H${s}" ${st} stroke-linecap="butt"/>`;break;
- case'stripes':b=`<path d="M${-s/2} ${s/2}L${s/2} ${-s/2}M0 ${s}L${s} 0M${s/2} ${s*1.5}L${s*1.5} ${s/2}" ${st} stroke-linecap="butt"/>`;break;
+ case'grid':b=`<path d="M0 ${t/2}H${s}M${t/2} 0V${s}" ${sb}/>`;break;
+ case'lines':b=`<path d="M0 ${s/2}H${s}" ${sb}/>`;break;
+ case'stripes':b=`<path d="M${-s/2} ${s/2}L${s/2} ${-s/2}M0 ${s}L${s} 0M${s/2} ${s*1.5}L${s*1.5} ${s/2}" ${sb}/>`;break;
  case'checker':b=`<rect width="${s/2}" height="${s/2}" fill="${fg}"/><rect x="${s/2}" y="${s/2}" width="${s/2}" height="${s/2}" fill="${fg}"/>`;break;
- case'waves':h=s/2;b=`<path d="M0 ${h/2}C${s/4} ${-h/4} ${s/4} ${-h/4} ${s/2} ${h/2}S${s*3/4} ${h*1.25} ${s} ${h/2}" ${st}/>`;break;
+ case'waves':{h=r(Math.max(s*.6,t*4));const m=h/2,A=Math.max(1,m-t);b=`<path d="M0 ${m}Q${s/4} ${m-2*A} ${s/2} ${m}T${s} ${m}" ${st}/>`;break}
  case'zigzag':h=s/2;b=`<path d="M0 ${h*.75}L${s/2} ${h*.25}L${s} ${h*.75}" ${st}/><path d="M${-s/2} ${h*.25}L0 ${h*.75}M${s} ${h*.75}L${s*1.5} ${h*.25}" ${st}/>`;break;
  case'hex':{const a=s/2,hh=Math.sqrt(3)*a;w=3*a;h=hh;const P=(cx,cy)=>{let q='';for(let i=0;i<6;i++){const g=Math.PI/3*i;q+=(i?'L':'M')+r(cx+a*.98*Math.cos(g))+' '+r(cy+a*.98*Math.sin(g))}return q+'Z'};b=`<path d="${P(a,hh/2)}${P(a*2.5,0)}${P(a*2.5,hh)}${P(-a/2,0)}${P(-a/2,hh)}" ${st}/>`;break}
  case'plus':{const k=Math.max(d*1.5,3);b=`<path d="M${s/2-k} ${s/2}H${s/2+k}M${s/2} ${s/2-k}V${s/2+k}" ${st}/>`;break}
  case'triangles':h=r(s*Math.sqrt(3)/2);b=`<path d="M0 ${h}L${s/2} 0L${s} ${h}Z" fill="${fg}"/>`;break;
  case'rings':b=`<circle cx="${s/2}" cy="${s/2}" r="${Math.max(1,s/2-t*1.5)}" ${st}/>`;break;
  case'diamonds':b=`<path d="M${s/2} ${s*.1}L${s*.9} ${s/2}L${s/2} ${s*.9}L${s*.1} ${s/2}Z" fill="${fg}"/>`;break;
- case'herring':b=`<path d="M0 ${s*.25}L${s/2} ${s*.75}L${s} ${s*.25}M0 ${s*.75}L${s/2} ${s*1.25}L${s} ${s*.75}M0 ${-s*.25}L${s/2} ${s*.25}L${s} ${-s*.25}" ${st} stroke-linecap="butt"/>`;break;
- case'cross':b=`<path d="M${-s/2} ${s/2}L${s/2} ${-s/2}M0 ${s}L${s} 0M${s/2} ${s*1.5}L${s*1.5} ${s/2}M${-s/2} ${s/2}L${s/2} ${s*1.5}M0 0L${s} ${s}M${s/2} ${-s/2}L${s*1.5} ${s/2}" ${st} stroke-linecap="butt"/>`;break}
+ case'herring':b=`<path d="M0 ${s*.25}L${s/2} ${s*.75}L${s} ${s*.25}M0 ${s*.75}L${s/2} ${s*1.25}L${s} ${s*.75}M0 ${-s*.25}L${s/2} ${s*.25}L${s} ${-s*.25}" ${sb}/>`;break;
+ case'cross':b=`<path d="M${-s/2} ${s/2}L${s/2} ${-s/2}M0 ${s}L${s} 0M${s/2} ${s*1.5}L${s*1.5} ${s/2}M${-s/2} ${s/2}L${s/2} ${s*1.5}M0 0L${s} ${s}M${s/2} ${-s/2}L${s*1.5} ${s/2}" ${sb}/>`;break}
  w=r(w);h=r(h);return{w,h,svg:`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${bg&&bg!=='none'?`<rect width="${w}" height="${h}" fill="${bg}"/>`:''}${b}</svg>`}}
 const uri=s=>'data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(s)));
 function previewSVG(o,W=300,Hh=140){const t=tile(o);return`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${Hh}" viewBox="0 0 ${W} ${Hh}"><defs><pattern id="p" width="${t.w}" height="${t.h}" patternUnits="userSpaceOnUse">${t.svg.replace(/^<svg[^>]*>|<\/svg>$/g,'')}</pattern></defs><rect width="${W}" height="${Hh}" fill="url(#p)"/></svg>`}
