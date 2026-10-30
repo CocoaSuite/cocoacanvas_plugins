@@ -115,25 +115,23 @@
   {
    "id": "sticky-notes",
    "name": "Sticky Notes",
-   "version": "1.0.0",
+   "version": "2.0.0",
    "author": "CocoaSuite",
-   "description": "Sticky notes and to-do lists for planning on the canvas. Notes come in soft colours and resize with their text; tick to-do items straight from the Plugins menu or Cocoa Helper.",
+   "description": "Sticky notes and to-do lists that float above your canvas for planning and feedback. They never become layers or end up in exports. Tap a note to edit it, change its colour or turn it into a checklist; tap a box to tick it.",
    "access": "safe",
    "permissions": [
     "ui",
     "menu",
     "helper",
-    "read",
-    "insert",
-    "edit"
+    "insert"
    ],
    "icon": "✎",
    "color": "#E2B93B",
    "path": "plugins/sticky-notes.js",
-   "sha256": "5d157f8f0cc3b12c9261d7c250a1d31cec3b67bda6c681752813a25a844a4b7c",
-   "size": 8028,
+   "sha256": "cd00885848c3dc0cfc4f6cc9f927217f000aa83fa87297d01c7f55e2f0ffcd49",
+   "size": 3983,
    "name_ru": "Стикеры",
-   "description_ru": "Стикеры и списки дел для планирования прямо на холсте. Заметки мягких цветов подстраиваются под текст; отмечайте задачи из меню плагинов или через Cocoa Helper."
+   "description_ru": "Стикеры и списки дел поверх холста для планирования и заметок. Они не становятся слоями и не попадают в экспорт. Коснитесь стикера, чтобы изменить текст, цвет или превратить его в список; коснитесь квадратика, чтобы отметить пункт."
   },
   {
    "id": "radius-sync",

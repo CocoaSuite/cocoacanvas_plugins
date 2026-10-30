@@ -11,7 +11,7 @@ The official plugin catalogue for [CocoaCanvas](https://github.com/CocoaSuite/co
 | Pattern Generator | Seamless vector patterns that fill a frame. |
 | Noise Generator | Grain, colour noise, clouds and paper texture as a blend layer. |
 | Charts & Tables | Column, bar, line, area, pie and donut charts and tables from pasted data, as editable shapes. |
-| Sticky Notes | Coloured notes and to-do lists you can tick off. |
+| Sticky Notes | Notes and to-do lists that float above the canvas, outside layers and exports. |
 | Radius Sync | Nested corners that follow the outer radius minus the gap. |
 | Remove Background | Cuts plain backgrounds out of images, on your device. |
 | QR Code | Links, text, Wi-Fi, email, phone, SMS and contacts as editable vectors. |
@@ -74,6 +74,7 @@ Every call returns a Promise in sealed plugins.
 - `cocoa.preview(item)` returns an SVG string of the item for thumbnails.
 - `cocoa.selection()` returns the selected layers as plain objects. `cocoa.bounds()` returns `{selection, view}`.
 - `cocoa.update(id, props)` and `cocoa.remove(id)` change layers. Each change is one undo step.
+- `cocoa.addNote({kind:'note'|'todo', color, text, title, items, w, fs})` adds a sticky note above the canvas (`insert`). Notes are not layers and are never exported.
 - `cocoa.updateMany([{id, props}, …])` changes many layers as a single undo step.
 - `cocoa.imageData(id)` returns an image layer's pixels as a data URL (`read`). `cocoa.setImage(id, dataURL)` replaces them with a PNG, JPEG or WebP (`edit`).
 - `cocoa.addMenuItem(label, fn)` adds an action to the Plugins menu.
