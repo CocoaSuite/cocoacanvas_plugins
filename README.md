@@ -13,11 +13,11 @@ The official plugin catalogue for [CocoaCanvas](https://github.com/CocoaSuite/co
 | Charts & Tables | Column, bar, line, area, pie and donut charts and tables from pasted data, as editable shapes. |
 | Sticky Notes | Notes and to-do lists that float above the canvas, outside layers and exports. |
 | Radius Sync | Nested corners that follow the outer radius minus the gap. |
-| Remove Background | Cuts plain backgrounds out of images, on your device. |
+| Remove Background | Cuts the subject out of any photo with an on-device AI model (BiRefNet lite or ormbg), or plain backgrounds without a download. |
 | QR Code | Links, text, Wi-Fi, email, phone, SMS and contacts as editable vectors. |
 | Lorem Ipsum | Placeholder text in Latin, English or Russian. |
 
-All plugins are **sealed**: they run in an isolated worker with no internet, no file access and only the permissions shown when you install them.
+All plugins are **sealed**: they run in an isolated worker with no file access and only the permissions shown when you install them. Only plugins with the `net` permission can reach the internet, and only jsDelivr and Hugging Face.
 
 The design kits are independent recreations drawn from scratch. They are not affiliated with or endorsed by Apple or Google. Apple, iPhone and iOS are trademarks of Apple Inc. Google, Android and Material Design are trademarks of Google LLC.
 
@@ -51,6 +51,7 @@ The optional fields `@name_ru` and `@description_ru` give Russian text. Add `@ac
 | `read` | `cocoa.selection()`, `cocoa.bounds()`, `cocoa.on()` |
 | `insert` | `cocoa.insert()` new layers |
 | `edit` | `cocoa.update()`, `cocoa.updateMany()`, `cocoa.setImage()`, `cocoa.remove()` |
+| `net` | Load code from jsDelivr and AI models from Hugging Face (only those hosts), and keep downloads with `cocoa.cache` |
 
 ### API
 
@@ -85,6 +86,7 @@ Every call returns a Promise in sealed plugins.
   - With `onSubmit`, the panel stays open after the OK button is pressed. Without it, the Promise resolves with the values.
 - `cocoa.closeForm()` closes the panel.
 - `cocoa.on('selection' | 'change', fn)` runs `fn` when the selection or the document changes.
+- `cocoa.cache.get(key)`, `cocoa.cache.put(key, arrayBuffer)` and `cocoa.cache.clear()` keep large downloads such as AI models on the device (`net`). They are deleted when the plugin is removed.
 - `cocoa.storage.get(key)` and `cocoa.storage.set(key, value)` give each plugin up to 200 KB per key.
 
 ## The catalogue
@@ -97,4 +99,5 @@ The plugin code is © CocoaSuite. Third-party parts keep their own licences (ful
 
 - Lucide icons: ISC
 - Material Symbols: Apache 2.0
+- Remove Background downloads, at runtime, Transformers.js (Apache 2.0), ONNX Runtime Web (MIT), BiRefNet lite (MIT) and ormbg (Apache 2.0).
 - QR Code Generator by Kazuhiko Arase: MIT. "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.

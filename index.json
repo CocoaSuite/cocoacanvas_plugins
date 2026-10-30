@@ -158,24 +158,25 @@
   {
    "id": "remove-background",
    "name": "Remove Background",
-   "version": "1.0.0",
+   "version": "2.0.0",
    "author": "CocoaSuite",
-   "description": "Cuts the background out of a photo, product shot, logo or scan, right on your device. Works best when the background is fairly plain; tune the strength and edge softness, or pick the colour to remove.",
+   "description": "Cuts the subject out of any photo with an AI model that runs on your device. The model downloads once (44 to 115 MB) and is kept for next time; your images never leave the device. A quick no-download mode handles plain backgrounds.",
    "access": "safe",
    "permissions": [
     "ui",
     "menu",
     "helper",
     "read",
-    "edit"
+    "edit",
+    "net"
    ],
    "icon": "✂",
    "color": "#5B6CD9",
    "path": "plugins/remove-background.js",
-   "sha256": "314522d8180ca04a4ad105e3176b3d930868662896b6b6d59fc199310e94aba4",
-   "size": 9508,
+   "sha256": "8eba9b070c0aedeb891806e3f8fd1d69f05a2c75dacae77bb65d269081a89a9a",
+   "size": 11250,
    "name_ru": "Удаление фона",
-   "description_ru": "Вырезает фон с фото, снимка товара, логотипа или скана прямо на устройстве. Лучше всего работает с однотонным фоном; настройте силу и мягкость края или выберите цвет для удаления."
+   "description_ru": "Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. Модель скачивается один раз (от 44 до 115 МБ) и сохраняется; изображения не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном."
   },
   {
    "id": "patterns",
