@@ -71,7 +71,7 @@
   {
    "id": "placeholders",
    "name": "Placeholder Graphics",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "author": "CocoaSuite",
    "description": "Ready-made UI placeholders: buttons, fields, checkboxes, avatars, image and video boxes, cards, tabs, dialogs, toasts and skeletons. Built with auto layout in your accent colour, light or dark.",
    "access": "safe",
@@ -85,8 +85,8 @@
    "icon": "◫",
    "color": "#7A5AF8",
    "path": "plugins/placeholders.js",
-   "sha256": "a5ae8552c3286b26fc5746e645d11633b1fc6fd72e4b9b14ae9786de547d530f",
-   "size": 38473,
+   "sha256": "549fe952c5bc2455314b8501ec6b3b94bc968feb307329098dc2c53fb68a1514",
+   "size": 38459,
    "name_ru": "Заготовки интерфейса",
    "description_ru": "Готовые заготовки интерфейса: кнопки, поля, чекбоксы, аватары, места под фото и видео, карточки, вкладки, диалоги, уведомления и скелетоны. С автораскладкой, в вашем цвете, светлые или тёмные."
   },
@@ -158,7 +158,7 @@
   {
    "id": "remove-background",
    "name": "Remove Background",
-   "version": "2.0.0",
+   "version": "2.0.1",
    "author": "CocoaSuite",
    "description": "Cuts the subject out of any photo with an AI model that runs on your device. The model downloads once (44 to 115 MB) and is kept for next time; your images never leave the device. A quick no-download mode handles plain backgrounds.",
    "access": "safe",
@@ -173,10 +173,10 @@
    "icon": "✂",
    "color": "#5B6CD9",
    "path": "plugins/remove-background.js",
-   "sha256": "8eba9b070c0aedeb891806e3f8fd1d69f05a2c75dacae77bb65d269081a89a9a",
-   "size": 11250,
+   "sha256": "61c02160e9d5bddfa793c9dfaf81965a35a30cb6fb2b1738cb26b53fa2b70092",
+   "size": 11194,
    "name_ru": "Удаление фона",
-   "description_ru": "Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. Модель скачивается один раз (от 44 до 115 МБ) и сохраняется; изображения не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном."
+   "description_ru": "Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. Модель скачивается один раз (от 44 до 115 МБ) и сохраняется; фото не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном."
   },
   {
    "id": "patterns",

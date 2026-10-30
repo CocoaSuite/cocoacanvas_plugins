@@ -2,7 +2,7 @@
 // @id placeholders
 // @name Placeholder Graphics
 // @name_ru Заготовки интерфейса
-// @version 1.0.0
+// @version 1.0.1
 // @author CocoaSuite
 // @description Ready-made UI placeholders: buttons, fields, checkboxes, avatars, image and video boxes, cards, tabs, dialogs, toasts and skeletons. Built with auto layout in your accent colour, light or dark.
 // @description_ru Готовые заготовки интерфейса: кнопки, поля, чекбоксы, аватары, места под фото и видео, карточки, вкладки, диалоги, уведомления и скелетоны. С автораскладкой, в вашем цвете, светлые или тёмные.
@@ -66,7 +66,7 @@ const ITEMS=[
  {id:'m-avatar',cat:'media',label:T('Avatar','Аватар'),make:s=>avatar(pal(s),64)},
  {id:'m-initials',cat:'media',label:T('Initials','Инициалы'),make:s=>avatar(pal(s),64,{initials:'AK'})},
  {id:'m-group',cat:'media',label:T('Avatar group','Группа аватаров'),make:s=>{const p=pal(s);return G({name:'Avatar group'},[0,1,2,3].map(i=>Object.assign(avatar(p,40,{ring:1,initials:i===3?'+5':i===1?'MS':null}),{x:i*28,y:0})))}},
- {id:'m-image',cat:'media',label:T('Image','Изображение'),make:s=>{const p=pal(s);return F({name:'Image placeholder',w:320,h:200,r:p.r,fill:p.surf,clip:true,al:al('v',8,0,{ax:1,ay:1,sw:'f',sh:'f'})},[I(K.lu('image',p.muted,1.5),{w:40,h:40,name:'image'}),X('320 × 200',{fs:12,fill:p.muted,ff:'Mono',name:'Size'})])}},
+ {id:'m-image',cat:'media',label:T('Image','Фото'),make:s=>{const p=pal(s);return F({name:'Image placeholder',w:320,h:200,r:p.r,fill:p.surf,clip:true,al:al('v',8,0,{ax:1,ay:1,sw:'f',sh:'f'})},[I(K.lu('image',p.muted,1.5),{w:40,h:40,name:'image'}),X('320 × 200',{fs:12,fill:p.muted,ff:'Mono',name:'Size'})])}},
  {id:'m-video',cat:'media',label:T('Video','Видео'),make:s=>{const p=pal(s);return F({name:'Video placeholder',w:320,h:180,r:p.r,fill:'#111114',clip:true,al:al('h',0,0,{ax:1,ay:1,sw:'f',sh:'f'})},[F({name:'Play',w:56,h:56,r:28,fill:'#FFFFFF',op:.92,al:al('h',0,[0,0,0,4],{ax:1,ay:1,sw:'f',sh:'f'})},[I(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="#111114"/></svg>`,{w:22,h:22,name:'play'})])])}},
  {id:'c-card',cat:'content',label:T('Card','Карточка'),make:s=>{const p=pal(s);return F({name:'Card',w:300,r:p.r,fill:p.bg,stroke:p.border,sw:1,sa:'i',clip:true,efx:K.shadow(4,16,p.d?.4:.08),al:al('v',0,0,{sw:'f',sh:'h'})},[F({name:'Image',w:300,h:160,fill:p.surf,lw:'fill',al:al('h',0,0,{ax:1,ay:1,sw:'f',sh:'f'})},[I(K.lu('image',p.muted,1.5),{w:36,h:36,name:'image'})]),F({name:'Body',lw:'fill',al:al('v',8,16,{sw:'f'})},[X(T('Card title','Заголовок карточки'),{fs:17,fw:600,fill:p.text,name:'Title'}),X(T('A short description that explains what this card is about.','Короткое описание, о чём эта карточка.'),{fs:14,fill:p.muted,fixW:true,w:268,lh:1.45,name:'Description',lw:'fill'}),btn(p,'primary',T('Open','Открыть'),{small:1})])])}},
  {id:'c-list',cat:'content',label:T('List item','Элемент списка'),make:s=>{const p=pal(s);return F({name:'List item',w:360,fill:p.bg,r:p.r,al:al('h',12,[12,16],{ay:1,sw:'f'})},[avatar(p,40,{initials:'JD'}),F({name:'Text',lw:'fill',al:al('v',2,0)},[X('Jordan Diaz',{fs:15,fw:600,fill:p.text,name:'Title'}),X(T('Product designer','Продуктовый дизайнер'),{fs:13,fill:p.muted,name:'Subtitle'})]),I(K.lu('chevron-right',p.muted,2),{w:18,h:18,name:'chevron'})])}},

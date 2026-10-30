@@ -2,10 +2,10 @@
 // @id remove-background
 // @name Remove Background
 // @name_ru Удаление фона
-// @version 2.0.0
+// @version 2.0.1
 // @author CocoaSuite
 // @description Cuts the subject out of any photo with an AI model that runs on your device. The model downloads once (44 to 115 MB) and is kept for next time; your images never leave the device. A quick no-download mode handles plain backgrounds.
-// @description_ru Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. Модель скачивается один раз (от 44 до 115 МБ) и сохраняется; изображения не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном.
+// @description_ru Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. Модель скачивается один раз (от 44 до 115 МБ) и сохраняется; фото не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном.
 // @icon ✂
 // @color #5B6CD9
 // @permissions ui menu helper read edit net
@@ -49,11 +49,11 @@ function plainMask(bm,o){const W=bm.width,H=bm.height,c=new OffscreenCanvas(W,H)
 function compose(bm,mask,o){const W=bm.width,H=bm.height,c=new OffscreenCanvas(W,H),x=c.getContext('2d',{willReadFrequently:true});x.drawImage(bm,0,0);const im=x.getImageData(0,0,W,H),d=im.data;
  const cut=(+o.cut)/100,sw=.02+(+o.soft)/100*.45,lo=Math.max(0,cut-sw/2),hi=Math.min(1,cut+sw/2);
  for(let i=0;i<W*H;i++){let a=mask[i];a=a<=lo?0:a>=hi?1:(a-lo)/(hi-lo);d[i*4+3]=Math.round(d[i*4+3]*a)}x.putImageData(im,0,0);return c}
-async function getBM(id){const u=await cocoa.imageData(id);if(!u)throw new Error(T('This image has no pixels yet.','У этого изображения нет данных.'));return createImageBitmap(toBlob(u))}
+async function getBM(id){const u=await cocoa.imageData(id);if(!u)throw new Error(T('This image has no pixels yet.','У этого фото нет данных.'));return createImageBitmap(toBlob(u))}
 async function maskFor(id,bm,o){if(o.engine==='plain')return plainMask(bm,o);return aiMask(id,bm,await pickEngine(o))}
 async function apply(o,sel){let n=0;for(const im of sel){try{const bm=await getBM(im.id),m=await maskFor(im.id,bm,o);await cocoa.setImage(im.id,await url(compose(bm,m,o)));n++}catch(e){cocoa.toast(T('Couldn’t remove the background: ','Не удалось удалить фон: ')+String(e?.message||e).slice(0,140))}}
  cocoa.storage.set('opts',o);if(n)cocoa.toast(T(`Background removed from ${n} image${n>1?'s':''}. Undo brings it back.`,`Фон удалён: ${n}. Отмена вернёт его.`))}
-async function pickImage(){const sel=(await cocoa.selection()).filter(n=>n.type==='image');if(!sel.length){cocoa.toast(T('Select an image first.','Сначала выделите изображение.'));return null}return sel}
+async function pickImage(){const sel=(await cocoa.selection()).filter(n=>n.type==='image');if(!sel.length){cocoa.toast(T('Select an image first.','Сначала выделите фото.'));return null}return sel}
 let SRC=null;
 async function preview(o){if(!SRC)return'';const k=Math.min(1,420/Math.max(SRC.bm.width,SRC.bm.height)),w=Math.max(1,Math.round(SRC.bm.width*k)),h=Math.max(1,Math.round(SRC.bm.height*k));
  let m;try{m=await maskFor(SRC.id,SRC.bm,o)}catch(e){return{src:''}}const full=compose(SRC.bm,m,o),P=new OffscreenCanvas(w,h),x=P.getContext('2d'),s=10;for(let Y=0;Y<h;Y+=s)for(let X=0;X<w;X+=s){x.fillStyle=((X+Y)/s)%2?'#d9d9d9':'#f5f5f5';x.fillRect(X,Y,s,s)}x.drawImage(full,0,0,w,h);return{src:await url(P)}}
@@ -74,4 +74,4 @@ async function open(){const sel=await pickImage();if(!sel)return;try{SRC={id:sel
 cocoa.addMenuItem(T('Remove background…','Удалить фон…'),open);
 cocoa.addMenuItem(T('Quick remove background','Быстро удалить фон'),async()=>{const sel=await pickImage();if(sel)apply(last,sel)});
 cocoa.addMenuItem(T('Delete downloaded AI models','Удалить скачанные ИИ-модели'),async()=>{await cocoa.cache.clear();for(const k in LOADED)delete LOADED[k];MASKS.clear();cocoa.toast(T('Downloaded models removed.','Скачанные модели удалены.'))});
-cocoa.helper.addCommand(/^(?:remove|cut out|delete|erase)\s+(?:the\s+)?(?:background|bg)$|^(?:удали|убери|вырежи)\s+фон$/i,async()=>{const sel=await pickImage();if(sel)apply(last,sel)},T('remove the image background','удалить фон изображения'));
+cocoa.helper.addCommand(/^(?:remove|cut out|delete|erase)\s+(?:the\s+)?(?:background|bg)$|^(?:удали|убери|вырежи)\s+фон$/i,async()=>{const sel=await pickImage();if(sel)apply(last,sel)},T('remove the image background','удалить фон фото'));
