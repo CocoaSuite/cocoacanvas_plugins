@@ -2,7 +2,7 @@
 // @id remove-background
 // @name Remove Background
 // @name_ru Удаление фона
-// @version 3.0.0
+// @version 3.1.0
 // @author CocoaSuite
 // @description Cuts the subject out of any photo with an AI model that runs on your device. The first time, the model downloads (44 or 115 MB) and is tested before you can use it; it is kept for next time and your photos never leave the device. A quick no-download mode handles plain backgrounds.
 // @description_ru Вырезает объект с любого фото с помощью ИИ-модели, которая работает на устройстве. В первый раз модель скачивается (44 или 115 МБ) и проверяется, прежде чем ей можно пользоваться; она сохраняется, а фото не покидают устройство. Быстрый режим без загрузки справляется с однотонным фоном.
@@ -24,7 +24,9 @@ const url=async c=>new FileReaderSync().readAsDataURL(await c.convertToBlob({typ
 const msg=e=>String(e&&(e.message||e)||'unknown error').slice(0,220);
 // ---------- runtime ----------
 let ORT=null,GPU=null;
-async function hasGPU(){if(GPU!==null)return GPU;try{GPU=!!(self.navigator&&navigator.gpu&&await navigator.gpu.requestAdapter())}catch(e){GPU=false}return GPU}
+let F16=false;
+async function hasGPU(){if(GPU!==null)return GPU;try{const a=self.navigator&&navigator.gpu&&await navigator.gpu.requestAdapter();GPU=!!a;F16=!!(a&&a.features&&a.features.has('shader-f16'))}catch(e){GPU=false}return GPU}
+const bestOK=async()=>(await hasGPU())&&F16;
 async function ort(){if(ORT)return ORT;let err;for(const f of ORT_FILES){try{const m=await import(ORT_BASE+f);const o=m.default&&m.default.InferenceSession?m.default:m;if(!o.InferenceSession)throw new Error('no InferenceSession in '+f);o.env.wasm.wasmPaths=ORT_BASE;o.env.wasm.numThreads=1;o.env.wasm.proxy=false;ORT=o;return o}catch(e){err=e}}throw new Error(T('Couldn’t load the AI runtime from jsDelivr: ','Не удалось загрузить ИИ-среду с jsDelivr: ')+msg(err))}
 // ---------- download with progress, kept on the device ----------
 const KEY=k=>'model:'+MODELS[k].repo+'/'+MODELS[k].file;
@@ -37,9 +39,12 @@ async function download(k,onP){const M=MODELS[k],cached=await cocoa.cache.get(KE
  try{await cocoa.cache.put(KEY(k),buf)}catch(e){throw new Error(T('Couldn’t keep the model on this device (storage full?): ','Не удалось сохранить модель на устройстве (нет места?): ')+msg(e))}return buf}
 // ---------- session ----------
 const SES={};
-async function session(k,bytes){if(SES[k])return SES[k];const o=await ort(),gpu=await hasGPU();const tries=gpu?[['webgpu'],['wasm']]:[['wasm']];let err;
- for(const ep of tries){try{const s=await o.InferenceSession.create(bytes||await download(k),{executionProviders:ep,graphOptimizationLevel:'all'});SES[k]={s,ep:ep[0]};return SES[k]}catch(e){err=e}}
- throw new Error(T('The model couldn’t start on this device: ','Модель не запустилась на этом устройстве: ')+msg(err))}
+async function session(k,bytes){if(SES[k])return SES[k];const o=await ort(),gpu=await hasGPU();
+ // Best is a half-precision model: it only runs on a graphics chip with fp16 support. On the processor it needs gigabytes, so it is never tried there.
+ if(MODELS[k].gpuOnly&&!(gpu&&F16))throw new Error(T('This device’s graphics chip can’t run the Best model. Use Fast instead.','Видеочип этого устройства не тянет «Лучшую» модель. Выберите «Быструю».'));
+ const tries=MODELS[k].gpuOnly?['webgpu']:gpu?['webgpu','wasm']:['wasm'],errs=[];
+ for(const ep of tries){try{const s=await o.InferenceSession.create(new Uint8Array(bytes||await download(k)),{executionProviders:[ep],graphOptimizationLevel:'all'});SES[k]={s,ep};return SES[k]}catch(e){errs.push((ep==='webgpu'?'GPU: ':'CPU: ')+msg(e))}}
+ throw new Error(T('The model couldn’t start on this device. ','Модель не запустилась на этом устройстве. ')+errs.join(' · ')+(MODELS[k].gpuOnly?T(' Use Fast instead.',' Выберите «Быструю».'):''))}
 // ---------- inference ----------
 async function infer(k,bm){const M=MODELS[k],{s}=await session(k),o=ORT,S=M.S,c=new OffscreenCanvas(S,S),x=c.getContext('2d',{willReadFrequently:true});x.drawImage(bm,0,0,S,S);const px=x.getImageData(0,0,S,S).data,N=S*S,inp=new Float32Array(3*N);
  for(let i=0;i<N;i++)for(let ch=0;ch<3;ch++)inp[ch*N+i]=(px[i*4+ch]/255-M.mean[ch])/M.std[ch];
@@ -67,18 +72,18 @@ async function apply(o,sel){let n=0;for(const im of sel){try{const bm=await getB
  cocoa.storage.set('opts',o);if(n)cocoa.toast(T(`Background removed from ${n} photo${n>1?'s':''}. Undo brings it back.`,`Фон удалён: ${n}. Отмена вернёт его.`))}
 async function pickImage(){const sel=(await cocoa.selection()).filter(n=>n.type==='image');if(!sel.length){cocoa.toast(T('Select a photo first.','Сначала выделите фото.'));return null}return sel}
 // ---------- setup: download, start and test the model before anything else ----------
-async function setup(then){const gpu=await hasGPU(),def=gpu?'best':'fast';let running=false;
+async function setup(then){await hasGPU();const gpu=await bestOK(),def='fast';let running=false;
  await cocoa.ui.form({title:T('Set up background removal','Настройка удаления фона'),ok:T('Download and test','Скачать и проверить'),
   fields:[{type:'info',value:T('The AI model runs on your device, so it has to be downloaded once. It is checked before use and kept for next time.','ИИ-модель работает на устройстве, поэтому её нужно один раз скачать. Перед использованием она проверяется и сохраняется.')},
    {type:'chips',key:'engine',label:T('Model','Модель'),value:def,options:[['fast',T('Fast · 44 MB','Быстрая · 44 МБ')],['best',T('Best · 115 MB','Лучшая · 115 МБ')],...(then?[['plain',T('Plain background · no download','Однотонный фон · без загрузки')]]:[])]},
    {type:'info',key:'note',value:''},{type:'info',key:'status',value:''}],
-  onInput:o=>(o.engine==='plain'?{note:T('Removes plain, even backgrounds without any download. You can set up an AI model later from the Plugins menu.','Убирает однотонный фон без загрузки. ИИ-модель можно настроить позже в меню плагинов.'),$ok:T('Continue','Продолжить')}:{$ok:T('Download and test','Скачать и проверить'),note:o.engine==='best'?(gpu?T('Sharpest edges. Uses the graphics chip.','Самые чёткие края. Использует видеочип.'):T('This device has no WebGPU, so Best would be very slow. Choose Fast.','На этом устройстве нет WebGPU, «Лучшая» будет очень медленной. Выберите «Быстрая».')):T('Good for people, products and most photos. Works on every device.','Подходит для людей, товаров и большинства фото. Работает на любом устройстве.')}),
+  onInput:o=>(o.engine==='plain'?{note:T('Removes plain, even backgrounds without any download. You can set up an AI model later from the Plugins menu.','Убирает однотонный фон без загрузки. ИИ-модель можно настроить позже в меню плагинов.'),$ok:T('Continue','Продолжить')}:{$ok:T('Download and test','Скачать и проверить'),note:o.engine==='best'?(gpu?T('Sharpest edges. Needs a graphics chip with WebGPU and fp16; if it can’t start, Fast is chosen for you.','Самые чёткие края. Нужен видеочип с WebGPU и fp16; если не запустится, будет выбрана «Быстрая».'):T('This device’s graphics chip can’t run Best. Choose Fast.','Видеочип этого устройства не тянет «Лучшую». Выберите «Быструю».')):T('Good for people, products and most photos. Works on every device.','Подходит для людей, товаров и большинства фото. Работает на любом устройстве.')}),
   onSubmit:async o=>{if(o.engine==='plain'){last.engine='plain';cocoa.closeForm();return then&&then()}if(running)return;running=true;const k=o.engine,up=v=>cocoa.ui.update(v);up({$busy:true,status:T('Loading the AI runtime…','Загружаю ИИ-среду…')});
    try{await ort();let lastP=0;const bytes=await download(k,(g,t)=>{const now=Date.now();if(now-lastP<250)return;lastP=now;up({status:T(`Downloading… ${Math.min(100,Math.round(g/t*100))}% (${(g/1048576).toFixed(0)} of ${(t/1048576).toFixed(0)} MB)`,`Скачиваю… ${Math.min(100,Math.round(g/t*100))}% (${(g/1048576).toFixed(0)} из ${(t/1048576).toFixed(0)} МБ)`)})});
     up({status:T('Starting the model…','Запускаю модель…')});const ses=await session(k,bytes);up({status:T('Testing on a sample picture…','Проверяю на тестовой картинке…')});await selfTest(k);
     await cocoa.storage.set('ok:'+KEY(k),{at:Date.now(),ep:ses.ep});last.engine=k;cocoa.storage.set('opts',last);up({status:T(`Ready (${ses.ep==='webgpu'?'graphics chip':'processor'}).`,`Готово (${ses.ep==='webgpu'?'видеочип':'процессор'}).`)});
     cocoa.closeForm();then&&then()}
-   catch(e){delete SES[k];up({$busy:false,$ok:T('Try again','Повторить'),status:'⚠ '+msg(e)+' '+T('You can still use “Plain background”, which needs no download.','Можно пользоваться режимом «Однотонный фон», он не требует загрузки.')})}finally{running=false}}})}
+   catch(e){delete SES[k];const sw=k==='best';up({$busy:false,...(sw?{engine:'fast',note:T('Good for people, products and most photos. Works on every device.','Подходит для людей, товаров и большинства фото. Работает на любом устройстве.'),$ok:T('Download Fast and test','Скачать «Быструю» и проверить')}:{$ok:T('Try again','Повторить')}),status:'⚠ '+msg(e).slice(0,200)+' '+(sw?T('Switched to Fast (44 MB).','Переключено на «Быструю» (44 МБ).'):T('You can still use “Plain background”, which needs no download.','Можно пользоваться режимом «Однотонный фон», он не требует загрузки.'))});if(sw)cocoa.cache.put(KEY('best'),new ArrayBuffer(0)).catch(()=>{})}finally{running=false}}})}
 let SRC=null;
 async function preview(o){if(!SRC)return'';const k=Math.min(1,420/Math.max(SRC.bm.width,SRC.bm.height)),w=Math.max(1,Math.round(SRC.bm.width*k)),h=Math.max(1,Math.round(SRC.bm.height*k));let m;
  try{m=await maskFor(SRC.id,SRC.bm,o)}catch(e){cocoa.toast(msg(e));return''}const full=compose(SRC.bm,m,o),P=new OffscreenCanvas(w,h),x=P.getContext('2d'),s=10;for(let Y=0;Y<h;Y+=s)for(let X=0;X<w;X+=s){x.fillStyle=((X+Y)/s)%2?'#d9d9d9':'#f5f5f5';x.fillRect(X,Y,s,s)}x.drawImage(full,0,0,w,h);return{src:await url(P)}}
